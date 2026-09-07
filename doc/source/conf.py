@@ -43,14 +43,15 @@ napoleon_numpy_docstring = False
 html_theme = "furo"
 html_static_path = ["_static"]
 html_css_files = ["custom.css"]
-html_logo = "_static/logo.svg"
-html_favicon = "_static/logo.svg"
+html_favicon = "_static/logo-light.svg"
 html_title = "%s %s" % (project, release)
 html_copy_source = False
 html_show_sourcelink = False
 
 html_theme_options = {
     "sidebar_hide_name": True,
+    "light_logo": "logo-light.svg",
+    "dark_logo": "logo-dark.svg",
     "navigation_with_keys": True,
     "light_css_variables": {
         "color-brand-primary": "#1b7f4b",

@@ -1,6 +1,17 @@
-<img src="doc/source/_static/logo.svg" alt="" width="112" align="right">
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)"
+          srcset="doc/source/_static/logo-dark.svg">
+  <img src="doc/source/_static/logo-light.svg"
+       alt="plattipus_nvidia_warp" width="128">
+</picture>
 
 # plattipus_nvidia_warp
+
+**NVIDIA Warp kernels as a compiled Houdini SOP**
+
+</div>
 
 A compiled [Houdini](https://www.sidefx.com) SOP that runs
 [NVIDIA Warp](https://github.com/NVIDIA/warp) kernels over geometry.
