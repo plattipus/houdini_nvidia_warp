@@ -1,0 +1,23 @@
+/* Keep the node icon a sensible size in the sidebar. */
+.sidebar-logo {
+    max-width: 6rem;
+    margin: 0 auto;
+}
+
+/* Tables in this documentation are reference material, so favour density
+   and let long cells wrap rather than scroll. */
+table.docutils {
+    width: 100%;
+    table-layout: auto;
+}
+
+table.docutils td,
+table.docutils th {
+    white-space: normal;
+    vertical-align: top;
+}
+
+/* The parameter and name tables read better with the first column tight. */
+table.docutils td:first-child {
+    white-space: nowrap;
+}

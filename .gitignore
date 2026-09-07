@@ -1,0 +1,18 @@
+# Build output
+build/
+*.o
+*.so
+*.dylib
+*.dll
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Sphinx
+doc/build/
+
+# Editor and OS
+.DS_Store
+.notebook/

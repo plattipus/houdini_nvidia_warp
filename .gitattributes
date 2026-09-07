@@ -1,0 +1,14 @@
+# Houdini scene files are binary; never let git normalise line endings or try
+# to merge them.
+*.hip binary
+*.hipnc binary
+*.hda binary
+*.hdanc binary
+
+# Keep text files consistent across platforms.
+*.py text eol=lf
+*.C text eol=lf
+*.rst text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.svg text eol=lf

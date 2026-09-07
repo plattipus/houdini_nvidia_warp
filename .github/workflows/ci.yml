@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - run: pip install sphinx furo
+      - run: sphinx-build -b html doc/source doc/build -W
+
+# The node test in tests/test_nvidia_warp.py needs a licensed Houdini and is run
+# locally with hython. See the Tests section of README.md.
