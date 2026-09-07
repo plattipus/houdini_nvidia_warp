@@ -6,8 +6,9 @@ version = '1.0.0'
 
 description = \
     """
-    Compiled HDK SOP exposing NVIDIA Warp kernels as a native Houdini node
-    (plattipus::nvidia_warp::1.0, "NVIDIA Warp").
+    Executes an NVIDIA Warp kernel on geometry.
+
+    A compiled HDK SOP, plattipus::nvidia_warp::1.0, labelled "NVIDIA Warp".
 
     The node is structured like Houdini's own Python/OpenCL SOPs: a Kernel
     tab for the @wp.kernel device code, a Warp Code tab for the host-side

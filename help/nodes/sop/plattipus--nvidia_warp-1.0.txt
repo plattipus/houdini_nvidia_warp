@@ -1,0 +1,100 @@
+#type:     node
+#context:  sop
+#internal: plattipus::nvidia_warp::1.0
+#icon:     plattipus_nvidia_warp
+
+= NVIDIA Warp =
+
+"""Executes an NVIDIA Warp kernel on geometry."""
+
+The NVIDIA Warp SOP provides a general interface to write and run
+[NVIDIA Warp|https://github.com/NVIDIA/warp] kernels on geometry. Warp compiles
+Python to native CPU and CUDA code, so a kernel written on this node runs at
+native speed without leaving Houdini.
+
+The node is split in two. The __Kernel__ tab holds the `@wp.kernel` device
+code. The __Warp Code__ tab holds ordinary host-side Python, which reads the
+input geometry, builds the arrays the kernel needs, launches it, and returns
+the result.
+
+WARNING:
+    This node requires that you understand NVIDIA Warp. Kernel code is
+    compiled and run directly, and it is easy to write incorrect code.
+
+== Reading and writing geometry ==
+
+The Warp Code runs with the input geometry already in scope:
+
+    * `geo` is the read-only input geometry, a `hou.Geometry`.
+    * `point_attrib_array(name)` reads a float point attribute as a numpy
+      array without copying.
+    * `houdiniGeo` is a writable `hou.Geometry`. The whole HOM API works on
+      it, including adding and removing points. It copies the input the first
+      time you mention it, so leave it alone if you only need to write
+      attributes.
+    * `store` is a dict that survives between cooks. Use it to cache data
+      derived from the topology, such as a neighbour graph.
+
+`hou.pwd().geometry()` does not work here. Asking a node for its own geometry
+while it is cooking is circular, and Houdini reports it as an infinite
+recursion. Read through `geo` and write through `out` or `houdiniGeo`.
+
+== Returning results ==
+
+Assign `out` in the Warp Code:
+
+    * `out = {"name": array}` writes each key as a point attribute.
+    * `out = array` writes to the Output Attribute.
+    * `out = {}` writes nothing.
+
+An array shaped `(npoints,)` becomes a float attribute, and `(npoints, 3)`
+becomes a vector attribute.
+
+@parameters
+
+== Kernel ==
+
+Kernel:
+    #id: kernel
+
+    The Warp kernel source. Every kernel defined here is available to the
+    Warp Code under the name it was given, so `wp.launch(my_kernel, ...)`
+    works directly.
+
+Kernel Name:
+    #id: kernelname
+
+    The name of the kernel to run. It is also bound in the Warp Code as
+    `kernel`.
+
+== Warp Code ==
+
+Warp Code:
+    #id: warpcode
+
+    Host-side Python, run once per cook. Reads geometry, launches the kernel
+    and assigns `out`.
+
+== Options ==
+
+Device:
+    #id: device
+
+    The device to launch on. Selecting CUDA on a machine with no CUDA device
+    is an error rather than a silent fallback to CPU.
+
+Output Attribute:
+    #id: outattrib
+
+    The point attribute written when the Warp Code assigns a bare array to
+    `out`. Available in the Warp Code as `out_attrib`.
+
+Enable:
+    #id: enable
+
+    When off, the input geometry is passed through unchanged.
+
+@related
+    - [Node:sop/opencl]
+    - [Node:sop/python]
+    - [Node:sop/attribwrangle]

@@ -28,6 +28,16 @@ def _env(name):
     return value
 
 
+def _copy_tree(src, dst):
+    """Replace *dst* with a copy of *src*, if *src* exists."""
+    if not os.path.isdir(src):
+        return
+    if os.path.isdir(dst):
+        shutil.rmtree(dst)
+    shutil.copytree(
+        src, dst, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+
+
 def main():
     install = 'install' in sys.argv[1:]
 
@@ -69,29 +79,16 @@ def main():
     if os.path.isfile(stale_obj):
         os.remove(stale_obj)
 
-    # The node icon ships with the package; package.py puts this
-    # directory on HOUDINI_PATH so Houdini finds config/Icons/.
-    cfg_src = os.path.join(source_path, 'config')
-    cfg_dst = os.path.join(build_path, 'config')
-    if os.path.isdir(cfg_src):
-        if os.path.isdir(cfg_dst):
-            shutil.rmtree(cfg_dst)
-        shutil.copytree(cfg_src, cfg_dst)
-
-    # The sample python module tree ships alongside the dso.
-    py_src = os.path.join(source_path, 'python')
-    py_dst = os.path.join(build_path, 'python')
-    if os.path.isdir(py_src):
-        if os.path.isdir(py_dst):
-            shutil.rmtree(py_dst)
-        shutil.copytree(
-            py_src, py_dst,
-            ignore=shutil.ignore_patterns('__pycache__', '*.pyc'),
-        )
+    # config/Icons holds the node icon and help/nodes/sop the node help.
+    # package.py puts the package root on HOUDINI_PATH so Houdini finds both.
+    # python/ carries the module the node imports at cook time.
+    for tree in ('config', 'help', 'python'):
+        _copy_tree(os.path.join(source_path, tree),
+                   os.path.join(build_path, tree))
 
     if install:
         install_path = _env('REZ_BUILD_INSTALL_PATH')
-        for name in ('dso', 'python', 'config'):
+        for name in ('dso', 'python', 'config', 'help'):
             src_dir = os.path.join(build_path, name)
             if not os.path.isdir(src_dir):
                 continue

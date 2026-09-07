@@ -1,8 +1,12 @@
 plattipus_nvidia_warp
 =====================
 
-A compiled Houdini SOP that runs `NVIDIA Warp <https://github.com/NVIDIA/warp>`_
-kernels over geometry.
+**Executes an NVIDIA Warp kernel on geometry.**
+
+The NVIDIA Warp SOP provides a general interface to write and run
+`NVIDIA Warp <https://github.com/NVIDIA/warp>`_ kernels on geometry inside
+`Houdini <https://www.sidefx.com>`_. Warp compiles Python to native CPU and
+CUDA code, so a kernel written on this node runs at native speed.
 
 The node is structured like Houdini's own Python and OpenCL SOPs: a **Kernel**
 tab for the ``@wp.kernel`` device code, a **Warp Code** tab for the host-side

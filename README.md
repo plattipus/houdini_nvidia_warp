@@ -9,7 +9,7 @@
 
 # plattipus_nvidia_warp
 
-**NVIDIA Warp kernels as a compiled Houdini SOP**
+**Executes an NVIDIA Warp kernel on geometry.**
 
 </div>
 
