@@ -72,12 +72,18 @@ Houdini must be available as an external rez package exporting `HFS`. See
 ## Install
 
 ```bash
+git clone https://github.com/plattipus/houdini_nvidia_warp.git
+cd houdini_nvidia_warp
 rez build --install
 rez env plattipus_nvidia_warp -- houdini
 ```
 
 Drop an **NVIDIA Warp** SOP after any geometry. The shipped defaults are a
 ripple deformer, so a new node produces visible output immediately.
+
+The repository is named `houdini_nvidia_warp` and the rez package it builds is
+`plattipus_nvidia_warp`. rez takes the package name from `package.py`, so the
+directory you clone into does not matter.
 
 ## The three tabs
 

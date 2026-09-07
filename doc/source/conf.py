@@ -50,6 +50,9 @@ html_show_sourcelink = False
 
 html_theme_options = {
     "sidebar_hide_name": True,
+    "source_repository": "https://github.com/plattipus/houdini_nvidia_warp/",
+    "source_branch": "main",
+    "source_directory": "doc/source/",
     "light_logo": "logo-light.svg",
     "dark_logo": "logo-dark.svg",
     "navigation_with_keys": True,
